@@ -32,5 +32,6 @@ describe("landing page", () => {
     expect(html).toContain('aria-label="View Jev vs. Jev on GitHub"');
     expect(html).toContain('href="https://github.com/souravC01/jev-vs-jev"');
     expect(html).toContain('rel="noopener noreferrer"');
+    expect(html).toContain('d="M10.226 17.284c-2.965');
   });
 });

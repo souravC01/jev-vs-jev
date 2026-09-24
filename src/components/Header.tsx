@@ -1,5 +1,6 @@
-import { Code2, Info } from "lucide-react";
+import { Info } from "lucide-react";
 import Link from "next/link";
+import { GitHubMark } from "@/components/GitHubMark";
 
 interface HeaderProps {
   onOpenAbout: () => void;
@@ -17,7 +18,7 @@ export function Header({ onOpenAbout }: HeaderProps) {
             <Info className="size-4" aria-hidden="true" /> <span className="hidden sm:inline">How it works</span>
           </button>
           <a href="https://github.com/souravC01/jev-vs-jev" target="_blank" rel="noopener noreferrer" aria-label="View Jev vs. Jev on GitHub" className="console-label flex min-h-11 items-center gap-1.5 text-[#f3bf61] hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f68d1f]">
-            <Code2 className="size-4" aria-hidden="true" /><span className="hidden sm:inline">GitHub ↗</span>
+            <GitHubMark /><span className="hidden sm:inline">GitHub ↗</span>
           </a>
         </div>
       </div>

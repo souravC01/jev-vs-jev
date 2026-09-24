@@ -1,7 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Code2 } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { SiteFooter } from "@/components/SiteFooter";
+import { GitHubMark } from "@/components/GitHubMark";
 
 export default function HomePage() {
   return (
@@ -17,7 +18,7 @@ export default function HomePage() {
               Launch Jev →
             </Link>
             <a href="https://github.com/souravC01/jev-vs-jev" target="_blank" rel="noopener noreferrer" aria-label="View Jev vs. Jev on GitHub" className="console-label flex min-h-11 items-center gap-1.5 text-[#f3bf61] hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f68d1f]">
-              <Code2 className="size-4" aria-hidden="true" /><span className="hidden sm:inline">GitHub ↗</span>
+              <GitHubMark /><span className="hidden sm:inline">GitHub ↗</span>
             </a>
           </div>
         </div>
