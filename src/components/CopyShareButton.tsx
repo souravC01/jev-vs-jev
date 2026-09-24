@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import Image from "next/image";
 import type { EvaluationResponse } from "@/lib/types";
 import { createShareCard } from "@/lib/share-card";
-import { formatResultForClipboard, encodeTaskToUrl } from "@/lib/share";
+import { formatResultForClipboard, formatShareCaption, encodeTaskToUrl } from "@/lib/share";
 import { Check, Copy, Download, Link as LinkIcon, Share2, X } from "lucide-react";
 
 interface CopyShareButtonProps { response: EvaluationResponse }
@@ -12,10 +12,11 @@ function ShareDialog({ response, onClose }: { response: EvaluationResponse; onCl
   const [card, setCard] = useState<{ blob: Blob; url: string } | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
+  const [copiedCaption, setCopiedCaption] = useState(false);
   const closeButton = useRef<HTMLButtonElement>(null);
   const dialog = useRef<HTMLElement>(null);
   const shareUrl = `${window.location.origin}${window.location.pathname}?task=${encodeTaskToUrl(response.task)}`;
-  const shareText = `I asked Jev if Jev should do it. Jev said ${response.result.verdict}.`;
+  const shareText = formatShareCaption(response);
   const xUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
   const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`;
 
@@ -62,6 +63,16 @@ function ShareDialog({ response, onClose }: { response: EvaluationResponse; onCl
     }
   }
 
+  async function copyCaption() {
+    try {
+      await navigator.clipboard.writeText(`${shareText} ${shareUrl}`);
+      setCopiedCaption(true);
+      setError(null);
+    } catch {
+      setError("Could not copy the caption. Try copying the link below.");
+    }
+  }
+
   function downloadCard() {
     if (!card) return;
     const anchor = document.createElement("a");
@@ -100,14 +111,15 @@ function ShareDialog({ response, onClose }: { response: EvaluationResponse; onCl
           {canNativeShare && <button type="button" onClick={() => void nativeShare()} className="console-button console-label flex min-h-11 items-center gap-2 px-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#21242e]"><Share2 className="size-4" /> Share via device</button>}
           <button type="button" onClick={downloadCard} disabled={!card} className="console-label flex min-h-11 items-center gap-2 border-b-2 border-r-2 border-black bg-[#21242e] px-3 text-white disabled:opacity-50"><Download className="size-4" /> Download image</button>
           <button type="button" onClick={() => void copyLink()} className="console-label flex min-h-11 items-center gap-2 border-b-2 border-r-2 border-black bg-[#21242e] px-3 text-white">{copied ? <Check className="size-4" /> : <LinkIcon className="size-4" />}{copied ? "Link copied" : "Copy link"}</button>
+          <button type="button" onClick={() => void copyCaption()} className="console-label flex min-h-11 items-center gap-2 border-b-2 border-r-2 border-black bg-[#21242e] px-3 text-white">{copiedCaption ? <Check className="size-4" /> : <Copy className="size-4" />}{copiedCaption ? "Caption copied" : "Copy caption + link"}</button>
         </div>
         <div className="mt-4 border-t border-dotted border-[#3d4f97] pt-3">
           <p className="console-label mb-2 text-[#26365f]">Post it</p>
           <div className="flex flex-wrap gap-2">
             <a href={xUrl} target="_blank" rel="noopener noreferrer" className="console-label flex min-h-11 items-center border-2 border-[#3d4f97] bg-[#dce8f2] px-3 text-[#21242e]">Open X draft ↗</a>
-            <a href={linkedinUrl} target="_blank" rel="noopener noreferrer" className="console-label flex min-h-11 items-center border-2 border-[#3d4f97] bg-[#dce8f2] px-3 text-[#21242e]">Open LinkedIn ↗</a>
+            <a href={linkedinUrl} target="_blank" rel="noopener noreferrer" className="console-label flex min-h-11 items-center border-2 border-[#3d4f97] bg-[#dce8f2] px-3 text-[#21242e]">Open LinkedIn (paste caption) ↗</a>
           </div>
-          <p className="mt-2 text-xs font-bold text-[#26365f]">To include the image on X or LinkedIn, download and attach it. Some apps also drop shared links, so copy the link if needed.</p>
+          <p className="mt-2 text-xs font-bold text-[#26365f]">X fills in the caption and link. For LinkedIn, copy the caption and paste it. To include the image on either platform, download and attach it.</p>
         </div>
         <input readOnly aria-label="Shareable task link" onFocus={(event) => event.currentTarget.select()} value={shareUrl} className="mt-3 w-full border-2 border-[#3d4f97] bg-white px-2 py-2 text-xs text-[#21242e]" />
       </section>
