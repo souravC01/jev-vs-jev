@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Code2 } from "lucide-react";
 import { SiteFooter } from "@/components/SiteFooter";
 
 export default function HomePage() {
@@ -11,10 +11,15 @@ export default function HomePage() {
           <span className="flex items-center gap-2.5 text-[15px] font-black tracking-[.08em]">
             JEV <span className="text-[#ecab37]">VS.</span> JEV
           </span>
-          <span className="console-label hidden text-[#f3bf61] sm:inline">A tiny experiment</span>
-          <Link href="/try" className="console-label flex min-h-11 items-center text-[#f3bf61] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f68d1f] sm:hidden">
-            Launch Jev →
-          </Link>
+          <div className="flex items-center gap-2 sm:gap-4">
+            <span className="console-label hidden text-[#f3bf61] sm:inline">A tiny experiment</span>
+            <Link href="/try" className="console-label flex min-h-11 items-center text-[#f3bf61] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f68d1f] sm:hidden">
+              Launch Jev →
+            </Link>
+            <a href="https://github.com/souravC01/jev-vs-jev" target="_blank" rel="noopener noreferrer" aria-label="View Jev vs. Jev on GitHub" className="console-label flex min-h-11 items-center gap-1.5 text-[#f3bf61] hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f68d1f]">
+              <Code2 className="size-4" aria-hidden="true" /><span className="hidden sm:inline">GitHub ↗</span>
+            </a>
+          </div>
         </div>
       </header>
 
