@@ -31,6 +31,10 @@ Open [http://localhost:3000](http://localhost:3000) for the meme-led introductio
 
 Without an API key, the app displays a configuration error. It never switches to a simulated answer.
 
+## Project layout
+
+Application code lives in `src/`: `app/` holds pages and the API route, `components/` holds UI pieces, `lib/` holds the Jev integration and shared helpers, and `middleware.ts` handles old share links. The landing image stays in `public/`, tests stay in `tests/`, and tool configuration stays at the project root.
+
 ## Deploy your own
 
 Deploy this Next.js repo on Vercel and add `OPENROUTER_API_KEY` as a server-side environment variable in the Vercel project settings. Set a spending limit on the key before sharing your deployment. Keep the key out of the repository and browser; `.env.example` lists the supported alternatives for local use.
