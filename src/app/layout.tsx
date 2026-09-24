@@ -3,9 +3,7 @@ import "./globals.css";
 import { SITE_METADATA } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.VERCEL_URL ? "https://" + process.env.VERCEL_URL : "http://localhost:3000"
-  ),
+  metadataBase: new URL(process.env.SITE_URL || "https://jev-vs-jev.vercel.app"),
   title: SITE_METADATA.title,
   description: SITE_METADATA.description,
   openGraph: {
