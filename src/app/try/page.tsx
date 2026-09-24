@@ -9,6 +9,7 @@ import { VerdictBadge } from "@/components/VerdictBadge";
 import { LatencyTag } from "@/components/LatencyTag";
 import { CopyShareButton } from "@/components/CopyShareButton";
 import { AboutModal } from "@/components/AboutModal";
+import { SiteFooter } from "@/components/SiteFooter";
 import type { EvaluationResponse, ExampleTask } from "@/lib/types";
 
 function MainContent() {
@@ -84,7 +85,7 @@ function MainContent() {
   return (
     <div className="flex min-h-[100dvh] flex-col">
       <Header onOpenAbout={() => setIsAboutOpen(true)} />
-      <main className="mx-auto flex w-full max-w-[1120px] flex-1 px-2.5 py-2 sm:px-5 sm:py-5">
+      <main className="mx-auto flex w-full max-w-[1120px] flex-1 px-2.5 py-2 sm:px-5 sm:py-4">
         <div className={`console-frame flex w-full flex-col p-2.5 sm:p-4 ${result || error || isLoading ? "has-verdict" : ""}`}>
           <div className="mb-2 flex items-center justify-between border-b border-[#3d4f97] pb-2 text-[#26365f] sm:mb-3">
             <span className="console-label">Self-check</span>
@@ -155,6 +156,7 @@ function MainContent() {
           <p className="mt-1 text-[11px] font-bold text-[#283968] sm:mt-3"><span className="sm:hidden">Jev&apos;s estimate, not a guarantee.</span><span className="hidden sm:inline">A playful self-check, not a capability guarantee. The percentage is Jev&apos;s estimate, not a success rate.</span></p>
         </div>
       </main>
+      <SiteFooter />
       <AboutModal isOpen={isAboutOpen} onClose={() => setIsAboutOpen(false)} />
     </div>
   );
