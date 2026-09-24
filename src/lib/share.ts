@@ -10,6 +10,10 @@ export function formatResultForClipboard(response: EvaluationResponse): string {
   ].join("\n");
 }
 
+export function formatShareCaption(response: EvaluationResponse): string {
+  return `I asked Jev vs. Jev if my task was right for Jev. It said ${response.result.verdict}. Agree with the verdict? Put Jev on trial:`;
+}
+
 export function encodeTaskToUrl(task: string): string {
   return encodeURIComponent(task);
 }
