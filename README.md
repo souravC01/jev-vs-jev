@@ -48,6 +48,6 @@ npm run build
 
 ## Credits
 
-Built by [Sourav Chandhok](https://www.souravchandhok.dev/). Jev is by [TypeSafe AI](https://typesafe.ai/); this deployment reaches it via [OpenRouter](https://openrouter.ai/). The landing meme is used with its creator's permission. That permission does not automatically grant image reuse rights to forks.
+Built by [Sourav Chandhok](https://www.souravchandhok.dev/). Jev is by [TypeSafe AI](https://typesafe.ai/); this deployment reaches it via [OpenRouter](https://openrouter.ai/).
 
 Laya can join the argument later. For now, it's Jev vs. Jev.
