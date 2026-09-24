@@ -4,6 +4,8 @@
 
 A small, playful experiment built with Next.js, TypeScript, and Jev. The page sends your task to Jev once and displays its YES/NO answer. It does not use a generative model to write an explanation or a local heuristic to invent a verdict.
 
+**Live app:** [jev-vs-jev.vercel.app](https://jev-vs-jev.vercel.app/) · [Go straight to the checker](https://jev-vs-jev.vercel.app/try)
+
 ## Run locally
 
 Requires Node.js 18+ and an Experiential Labs, OpenRouter, or TypeSafe API key.
@@ -28,6 +30,10 @@ npm run dev
 Open [http://localhost:3000](http://localhost:3000) for the meme-led introduction, then select **Launch Jev**. The checker is at [http://localhost:3000/try](http://localhost:3000/try).
 
 Without an API key, the app displays a configuration error. It never switches to a simulated answer.
+
+## Deploy your own
+
+Deploy this Next.js repo on Vercel and add `OPENROUTER_API_KEY` as a server-side environment variable in the Vercel project settings. Set a spending limit on the key before sharing your deployment. Keep the key out of the repository and browser; `.env.example` lists the supported alternatives for local use.
 
 ## How the judgment works
 
@@ -58,4 +64,4 @@ The tests cover the Jev request and response contract, probability mapping, inva
 
 This is Jev's opinion about its own suitability. It is not a capability guarantee, a scientific benchmark, or a recommendation to deploy Jev for a particular task. Laya comparison is deferred from this first version.
 
-The landing-page meme is a user-supplied image. Confirm you can publish it before a public launch, or replace it with artwork you can use.
+The landing page uses a user-supplied meme. If you fork the project, check the image's reuse terms for your own deployment.
