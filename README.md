@@ -6,7 +6,7 @@
 
 You describe a task. Jev decides whether **Jev** should do it. Then you get a YES or NO, Jev's probability toward that answer, and how long the request took. That's the whole experiment—and the joke.
 
-**[Try Jev vs. Jev →](https://jev-vs-jev.vercel.app/)** · [Skip to the checker](https://jev-vs-jev.vercel.app/try)
+**[Try Jev vs. Jev](https://jev-vs-jev.vercel.app/)**
 
 This is a playful self-check, not a scientific benchmark or a promise that Jev can complete the task. There is no second model quietly making the decision for it.
 
@@ -18,7 +18,7 @@ When you get an answer, **Share result** makes a little result card you can down
 
 ## Run it yourself
 
-Requires Node.js 18+ and a Jev API key. OpenRouter is the simplest path for this project:
+Requires Node.js 18+ and a Jev API key. I used OpenRouter, feel free to chose any of your desired provider:
 
 ```bash
 npm install
