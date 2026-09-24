@@ -1,71 +1,53 @@
 # Jev vs. Jev
 
-> Describe a task. Jev decides whether Jev should handle it.
+### An AI model interviewing itself for every job.
 
-A small, playful experiment built with Next.js, TypeScript, and Jev. The page sends your task to Jev once and displays its YES/NO answer. It does not use a generative model to write an explanation or a local heuristic to invent a verdict.
+![Two Spider-Men pointing at each other — the spirit of Jev vs. Jev](public/jev-points-at-jev.jpg)
 
-**Live app:** [jev-vs-jev.vercel.app](https://jev-vs-jev.vercel.app/) · [Go straight to the checker](https://jev-vs-jev.vercel.app/try)
+You describe a task. Jev decides whether **Jev** should do it. Then you get a YES or NO, Jev's probability toward that answer, and how long the request took. That's the whole experiment—and the joke.
 
-## Run locally
+**[Try Jev vs. Jev →](https://jev-vs-jev.vercel.app/)** · [Skip to the checker](https://jev-vs-jev.vercel.app/try)
 
-Requires Node.js 18+ and an Experiential Labs, OpenRouter, or TypeSafe API key.
+This is a playful self-check, not a scientific benchmark or a promise that Jev can complete the task. There is no second model quietly making the decision for it.
+
+## What can you ask?
+
+Try a bounded decision, such as routing a support ticket or flagging a suspicious payment. Then try asking Jev to write a whole blog post—or the obvious question: *Should Jev decide whether I should use Jev?*
+
+When you get an answer, **Share result** makes a little result card you can download or send from a supported device. It also gives you a link that pre-fills the task for someone else to try. The card preserves your original answer; the link asks Jev again only when the visitor clicks **Ask Jev**, so their answer may differ. The full task is part of the link, so share only text you're comfortable making public.
+
+## Run it yourself
+
+Requires Node.js 18+ and a Jev API key. OpenRouter is the simplest path for this project:
 
 ```bash
 npm install
 cp .env.example .env.local
 ```
 
-Create an [OpenRouter key](https://openrouter.ai/keys) and set it in `.env.local`:
+Create an [OpenRouter key](https://openrouter.ai/keys) and add it to `.env.local`:
 
 ```text
 OPENROUTER_API_KEY=your_key_here
 ```
 
-Keep the key private. OpenRouter bills Jev usage to your account, so check its balance and key limits before sharing the app. Existing Experiential Labs and direct TypeSafe keys remain optional. When multiple keys are set, the app chooses OpenRouter, then Experiential Labs, then TypeSafe. Then run:
+Set a spending limit on that key, keep it out of Git, then run `npm run dev` and open [localhost:3000](http://localhost:3000). The landing page introduces the bit; **Launch Jev** takes you to the checker. Experiential Labs and direct TypeSafe keys are also supported; see [.env.example](.env.example). If more than one key is set, the app chooses OpenRouter, then Experiential Labs, then TypeSafe. Without a key, it shows an error rather than making up an answer.
 
-```bash
-npm run dev
-```
+## What happens under the hood?
 
-Open [http://localhost:3000](http://localhost:3000) for the meme-led introduction, then select **Launch Jev**. The checker is at [http://localhost:3000/try](http://localhost:3000/try).
+`POST /api/evaluate` validates a 1–2,000 character task and sends one request to Jev. OpenRouter uses its `/api/alpha/decisions` endpoint and `typesafe/jev-1.13`; Experiential Labs and TypeSafe use `/v1/systemone` with `jev-latest`. The named `fit` question asks whether the task suits a bounded decision model—classification, routing, ranking, scoring, or verification—rather than substantial open-ended generation.
 
-Without an API key, the app displays a configuration error. It never switches to a simulated answer.
+Jev returns a `noul` yes probability from 0 to 1. The app shows YES at 0.5 or higher, otherwise NO. The displayed percentage is toward the selected answer, not a measured success rate or a separate confidence score. The server rejects malformed responses and keeps the API key out of the browser. The displayed time is observed request time, not a model benchmark.
 
-## Project layout
-
-Application code lives in `src/`: `app/` holds pages and the API route, `components/` holds UI pieces, `lib/` holds the Jev integration and shared helpers, and `middleware.ts` handles old share links. The landing image stays in `public/`, tests stay in `tests/`, and tool configuration stays at the project root.
-
-## Deploy your own
-
-Deploy this Next.js repo on Vercel and add `OPENROUTER_API_KEY` as a server-side environment variable in the Vercel project settings. Set a spending limit on the key before sharing your deployment. Keep the key out of the repository and browser; `.env.example` lists the supported alternatives for local use.
-
-## How the judgment works
-
-`POST /api/evaluate` validates a 1–2,000 character task and sends one request to Jev. Experiential Labs uses `https://api.experientiallabs.ai/v1/systemone` with `model: "jev-latest"`. Direct TypeSafe access uses its `/v1/systemone` endpoint with the same model; OpenRouter uses `/api/alpha/decisions` and `model: "typesafe/jev-1.13"`. The named `fit` question is a `noul` yes/no question:
-
-> Is this task suitable for Jev to perform?
-
-The question describes bounded decisions such as classification, routing, ranking, scoring, and verification as a fit. It describes substantial open-ended text, code, image, or other content generation as outside that fit.
-
-The API returns `answers.fit.noul`, a number from 0 to 1 representing the probability of yes. The app shows YES at 0.5 or above, otherwise NO. The displayed percentage is the probability toward the selected answer. A `noul` answer has no separate confidence field. The server validates the response; invalid or failed responses display an error. The observed time includes the HTTP request and is not a model benchmark.
-
-The API key stays on the server. A basic in-memory request limit is included; use a hosted rate limit if public traffic grows.
-
-## Sharing
-
-`Copy Result` copies the current Jev answer as text. `Share Task` copies a `/try?task=...` URL containing only the task; opening it asks Jev again, so the answer may differ from the original run. Old `/?task=...` links redirect to the checker. The task appears in the URL, so avoid using Share Task for sensitive text.
-
-## Verify
+Application code is in `src/`, tests are in `tests/`, and the landing image is in `public/`. A basic in-memory request limit is included; use a platform-level rate limit for public traffic. For your own deployment, set `OPENROUTER_API_KEY` as a server-side Vercel environment variable and give the key its own spending cap.
 
 ```bash
 npm test
 npm run build
 ```
 
-The tests cover the Jev request and response contract, probability mapping, invalid responses, upstream failures, input validation, and share text.
+## Credits
 
-## About the experiment
+Built by [Sourav Chandhok](https://www.souravchandhok.dev/). Jev is by [TypeSafe AI](https://typesafe.ai/); this deployment reaches it via [OpenRouter](https://openrouter.ai/). The landing meme is used with its creator's permission. That permission does not automatically grant image reuse rights to forks.
 
-This is Jev's opinion about its own suitability. It is not a capability guarantee, a scientific benchmark, or a recommendation to deploy Jev for a particular task. Laya comparison is deferred from this first version.
-
-The landing page uses a user-supplied meme. If you fork the project, check the image's reuse terms for your own deployment.
+Laya can join the argument later. For now, it's Jev vs. Jev.

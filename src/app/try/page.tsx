@@ -19,7 +19,6 @@ function MainContent() {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
-  const autoSubmittedTask = useRef<string | null>(null);
   const activeRequest = useRef(0);
 
   async function runEvaluation(value: string) {
@@ -58,8 +57,6 @@ function MainContent() {
     setResult(null);
     setError(null);
     setIsLoading(false);
-    autoSubmittedTask.current = null;
-
     const url = new URL(window.location.href);
     if (url.searchParams.has("task")) {
       url.searchParams.delete("task");
@@ -69,12 +66,7 @@ function MainContent() {
 
   useEffect(() => {
     const urlTask = searchParams.get("task");
-    if (urlTask && urlTask !== autoSubmittedTask.current) {
-      autoSubmittedTask.current = urlTask;
-      setTask(urlTask);
-      void runEvaluation(urlTask);
-    }
-    if (!urlTask) autoSubmittedTask.current = null;
+    if (urlTask) setTask(urlTask);
   }, [searchParams]);
 
   function selectExample(example: ExampleTask) {
