@@ -23,4 +23,15 @@ describe("landing page", () => {
     expect(html).toContain('href="https://typesafe.ai/"');
     expect(html).toContain('href="https://openrouter.ai/"');
   });
+
+  it.each([
+    ["landing", HomePage],
+    ["checker", TryPage],
+  ])("links to the public GitHub repo from the %s header", (_name, Page) => {
+    const html = renderToStaticMarkup(React.createElement(Page));
+    expect(html).toContain('aria-label="View Jev vs. Jev on GitHub"');
+    expect(html).toContain('href="https://github.com/souravC01/jev-vs-jev"');
+    expect(html).toContain('rel="noopener noreferrer"');
+    expect(html).toContain('d="M10.226 17.284c-2.965');
+  });
 });
