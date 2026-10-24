@@ -18,7 +18,7 @@ When you get an answer, **Share result** makes a little result card you can down
 
 ## Run it yourself
 
-Requires Node.js 18+ and a Jev API key. I used OpenRouter, feel free to chose any of your desired provider:
+Requires Node.js 20.9.0+ and a Jev API key. I used OpenRouter, feel free to chose any of your desired provider:
 
 ```bash
 npm install
